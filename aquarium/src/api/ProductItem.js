@@ -18,6 +18,7 @@ const ProductItem = ({product}) => {
             
             const response = await axios.post(`http://localhost:8080/cart/add?token=${token}`,item);
             console.log(response);
+            alert("Product have been added successfully");
         } catch (error) {
             console.log(error);
         }

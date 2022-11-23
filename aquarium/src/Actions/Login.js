@@ -24,6 +24,7 @@ const Login = () => {
             console.log(response);
             localStorage.setItem("token",response.data.token);
             localStorage.setItem("isAuth",true)
+            alert("Logged in..");
             navigate("/");
             // window.location.reload();
           };

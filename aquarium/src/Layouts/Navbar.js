@@ -32,6 +32,7 @@ export default function Navbar() {
       localStorage.removeItem("token");
       // setIsAuth(false);
       localStorage.removeItem("isAuth");
+      alert("Logged out");
       navigate("/");
       
   }

@@ -26,9 +26,26 @@ const Services = () => {
           await axios.delete(`http://localhost:8080/cart/delete/${cartItem.id}?token=${token}`);
           const newCart = cartItems.filter((item) => item.id !== cartItem.id);
           setCartItems(newCart);
+
+          const newresult =await axios.get(`http://localhost:8080/cart/?token=${token}`);
+          setTotalCost(newresult.data.totalCost);
+
+          alert("Product have been removed...");
+
       } catch (error) {
         console.log(error);
       }
+  }
+
+  const placeOrder = async () => {
+    try {
+      const response = await axios.post(`http://localhost:8080/order/add?token=${token}&sessionId`);
+      console.log(response);
+
+      alert("Order have been placed..");
+  } catch (error) {
+      console.log(error);
+  }
   }
 
 
@@ -51,9 +68,11 @@ const Services = () => {
                 <div class="col p-4 d-flex flex-column position-static">
                   
                   <h3 class="d-inline-block mb-2 text-primary">Product Name : {cartItem.product.name}</h3>
+                  <br class="my-2"/>
                   <strong class="mb-0">Price : {cartItem.product.price}</strong>
+                  <br class="my-2"/>
                   <strong class="mb-0">Quantity : {cartItem.quantity}</strong>
-                  <strong class="mb-0">Total Cost : {totalCost}</strong>
+                  <br class="my-2"/>
 
                   <button type="button" class="btn btn-sm btn-danger" onClick={()=>deleteFromCart(cartItem)}>Remove</button>
                           
@@ -67,7 +86,24 @@ const Services = () => {
               
            )})}
 
-                  <div class="col-md-6">
+              
+              </div>
+
+              <div>
+              <br class="my-4"/>
+              {/* <strong class="mb-0">Total Cost : {totalCost}</strong><div class="col"> */}
+        <div class="card mb-4 rounded-3 shadow-sm">
+          <div class="card-header py-3">
+            <h4 class="my-0 fw-normal">Total Cost</h4>
+          </div>
+          <div class="card-body">
+            <h1 class="card-title pricing-card-title">$ {totalCost}</h1>
+            <button type="button" class="w-100 btn btn-lg btn-outline-primary" onClick={()=>placeOrder()}>Place Order</button>
+          </div>
+        </div>
+      </div>
+
+                  {/* <div class="col-md-6">
                       <div class="row g-0 border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative">
                         <div class="col p-4 d-flex flex-column position-static">
                           <strong class="d-inline-block mb-2 text-primary">Product Name</strong>
@@ -81,11 +117,10 @@ const Services = () => {
 
                         </div>
                       </div>
-                    </div>
+                    </div> */}
 
       </div>
     </div>
-  </div>
 
   );
 };
